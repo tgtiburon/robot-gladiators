@@ -94,8 +94,21 @@ var startGame = function() {
             //debugger;
             var pickedEnemyName = enemyNames[i];
             enemyHealth = 20;//should be 50
+            debugger;
             // Pass the enemy name into the fight function
             fight(pickedEnemyName);
+           
+
+            //if we're not on the last enemy in the array 
+            if (playerHealth > 0 && i <enemyNames.length -1) {
+               // ask if the player wants to go to the shop
+               var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+               if(storeConfirm) {
+                   shop();
+
+               }
+               
+            }
         }
         else {
             window.alert("You have lost your robot in battle! Game Over");
@@ -135,6 +148,64 @@ var endGame = function () {
     }
 
 };
+
+var shop = function() {
+    console.log("entered the shop!");
+    // ask the player what they'd like to do
+    var shopOptionPrompt = window.prompt( 
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the shop?"
+
+        
+    );
+    //Use switch to carry out the action
+    switch (shopOptionPrompt) {
+        case "r":
+        case "REFILL": //new case will fall through to lower case version
+        case "refill":
+            if (playerMoney >=7) {
+
+            
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+                // increase players health and decrease money
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney -7;
+                
+            }
+            else {
+                window.alert("You don't have enough money.");
+            }
+            break;
+        
+        case "u":
+        case "UPGRADE":
+        case "upgrade":
+            if (playerMoney >=7) {
+
+            
+                window.alert("Upgrading the player's attack by 6 for 7 dollars.");
+                //increase players attack and decrease money
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money.");
+            }
+            break;
+        case "l":
+        case "LEAVE": 
+        case "leave":
+            window.alert("Leaving the store.");
+            // do nothing
+            break;
+        default:
+            window.alert("You did not pick a valid option. Try again.");
+
+            // call shop again to force player to pick a valid option
+            shop();
+            break;
+            
+    }
+}
 
 // var startGame has to be declared before it can be called.
 startGame();
