@@ -33,7 +33,7 @@ var fight = function(enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + " has chosen to skip the fight!");
                 //Subtract money for skipping
-                playerMoney = playerMoney -10;
+                playerMoney = Math.max(0, playerMoney -10);
                 console.log("playerMoney " + playerMoney);
                 break;
                 
@@ -42,7 +42,13 @@ var fight = function(enemyName) {
 
         
         // Subtract the value of 'playerAttack' from the value of 'enemyHealth' and update 'enemyHealth'
-        enemyHealth = enemyHealth - playerAttack;
+
+        // enemyHealth = Math.max(0, enemyHealth - playerAttack);
+        // generate random damage value bbased on player's attack power
+        var damage = randomNumber(playerAttack-3, playerAttack);
+        enemyHealth = Math.max(0, enemyHealth - damage);
+
+
 
         // Log resulting message to the console so we know it worked.
         console.log(playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.");
@@ -61,7 +67,9 @@ var fight = function(enemyName) {
         }
 
         // Subtract the value of 'enemyAttack' from 'playerHealth' and update 'playerHealth'
-        playerHealth = playerHealth - enemyAttack;
+        //playerHealth = Math.max(0, playerHealth - enemyAttack);
+        var damage = randomNumber(enemyAttack -3, enemyAttack);
+        playerHealth = Math.max(0, playerHealth - damage);
 
         // Log resulting message to the console so we know it worked.
         console.log( enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
@@ -92,10 +100,11 @@ var startGame = function() {
 
         
             window.alert("Welcome to Robot Gladiators! Round " + (i+1));
-            //debugger;
+            
             var pickedEnemyName = enemyNames[i];
-            enemyHealth = 20;//should be 50
-            debugger;
+            // gives a number between 0 to 59  floor rounds down
+            enemyHealth = randomNumber(40,60);
+          
             // Pass the enemy name into the fight function
             fight(pickedEnemyName);
            
@@ -206,6 +215,11 @@ var shop = function() {
             break;
             
     }
+}
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min +1) + min);
+
+    return value;
 }
 
 // var startGame has to be declared before it can be called.
