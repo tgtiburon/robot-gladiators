@@ -35,6 +35,7 @@ var fight = function(enemyName) {
                 //Subtract money for skipping
                 playerMoney = playerMoney -10;
                 console.log("playerMoney " + playerMoney);
+                break;
                 
             }
         }// end if pomptFight === skip
